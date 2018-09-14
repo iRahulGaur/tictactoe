@@ -1,8 +1,11 @@
 package com.rahulgaur.tictactoe;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private int turn = 0;
     private int gameover = 1;
     private TextView player1, player2;
+    private static String TAG = "MainActivity.java";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B1.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B1);
+                Boolean win = winCondition();
+
             }
         });
 
@@ -47,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B2.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B2);
+                Boolean win = winCondition();
 
             }
         });
@@ -55,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B3.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B3);
+                Boolean win = winCondition();
 
             }
         });
@@ -64,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B4.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B4);
+                Boolean win = winCondition();
 
             }
         });
@@ -73,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B5.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B5);
+                Boolean win = winCondition();
 
             }
         });
@@ -82,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B6.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B6);
+                Boolean win = winCondition();
 
             }
         });
@@ -91,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B7.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B7);
+                Boolean win = winCondition();
 
             }
         });
@@ -100,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B8.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B8);
+                Boolean win = winCondition();
 
             }
         });
@@ -109,15 +122,56 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B9.setEnabled(false);
-                playerTurn(turn);
+                playerTurn(turn, B9);
+                Boolean win = winCondition();
 
             }
         });
 
     }
 
-    private void playerTurn(int pt) {
-        if (pt == 0){
+    private boolean winCondition() {
+        int row = 1;
+
+        //for diagonal left to right "\" win checks "DONE"
+        Log.e(TAG, "diagonal left to right");
+        for (int col = 1; col <= 3; col++) {
+            for (int j = col; j <= col; j++) {
+                for (int i = col; i<= col; i++){
+                    Log.e(TAG, ""+i+j );
+                }
+            }
+        }
+
+        //for diagonal right to left "/" win checks
+
+        //for horizontal win checks "DONE"
+        Log.e(TAG, "horizontal");
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                Log.e(TAG, " "+i+j);
+            }
+        }
+
+        //for vertical win checks "DONE"
+        Log.e(TAG, "vertical");
+        for (int col = 1; col <= 3; col++) {
+            for (int j = 1; j <= 3; j++) {
+                for (int i = 1; i<= col; i++){
+                    if (i>=col) {
+                        Log.e(TAG, "" + j + i);
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void playerTurn(int pt, Button btn) {
+        if (pt == 0) {
+            btn.setText("O");
+            btn.setTextColor(Color.BLACK);
             String sourceString2 = "<b>Player 2</b>";
             player2.setText(Html.fromHtml(sourceString2));
             String sourceString1 = "Player 1";
@@ -126,7 +180,9 @@ public class MainActivity extends AppCompatActivity {
             turn++;
             gameover++;
         } else {
+            btn.setText("X");
             turn--;
+            btn.setTextColor(Color.BLACK);
             String sourceString1 = "<b>Player 1</b>";
             player1.setText(Html.fromHtml(sourceString1));
             String sourceString2 = "Player 2";
@@ -135,8 +191,13 @@ public class MainActivity extends AppCompatActivity {
             gameover++;
         }
 
-        if (gameover==9){
+        if (gameover >= 10) {
+            Intent i = new Intent(MainActivity.this, Result.class);
+            i.putExtra("player",pt);
+            startActivity(i);
+            finish();
             Toast.makeText(this, "GAME OVER :D", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "playerTurn: match ended");
         }
     }
 }

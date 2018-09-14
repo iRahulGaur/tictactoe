@@ -37,7 +37,7 @@ public class Welcome extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                username = nameET.getText().toString();
+                username = nameET.getText().toString().toUpperCase();
 
                 if (!username.isEmpty()) {
                     SharedPreferences.Editor editor = getSharedPreferences("USERNAME", MODE_PRIVATE).edit();
