@@ -137,19 +137,29 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "diagonal left to right");
         for (int col = 1; col <= 3; col++) {
             for (int j = col; j <= col; j++) {
-                for (int i = col; i<= col; i++){
-                    Log.e(TAG, ""+i+j );
+                for (int i = col; i <= col; i++) {
+                    Log.e(TAG, "" + i + j);
                 }
             }
         }
 
-        //for diagonal right to left "/" win checks
+        //for diagonal right to left "/" win checks "DONE"
+        int exit = 3;
+        Log.e(TAG, "diagonal right to left");
+        for (int j = 1; j <= 3; j++) {
+            for (int i = 3; i >= 1; i--) {
+                if (i==exit) {
+                    Log.e(TAG, "" + j + i);
+                }
+            }
+            exit--;
+        }
 
         //for horizontal win checks "DONE"
         Log.e(TAG, "horizontal");
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 3; j++) {
-                Log.e(TAG, " "+i+j);
+                Log.e(TAG, " " + i + j);
             }
         }
 
@@ -157,8 +167,8 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "vertical");
         for (int col = 1; col <= 3; col++) {
             for (int j = 1; j <= 3; j++) {
-                for (int i = 1; i<= col; i++){
-                    if (i>=col) {
+                for (int i = 1; i <= col; i++) {
+                    if (i >= col) {
                         Log.e(TAG, "" + j + i);
                     }
                 }
@@ -193,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (gameover >= 10) {
             Intent i = new Intent(MainActivity.this, Result.class);
-            i.putExtra("player",pt);
+            i.putExtra("player", pt);
             startActivity(i);
             finish();
             Toast.makeText(this, "GAME OVER :D", Toast.LENGTH_SHORT).show();
