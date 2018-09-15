@@ -4,7 +4,7 @@
     <string name="your_name">Your Name</string>
     <string name="submit">Submit</string>
     <string name="play">Play</string>
-    <string name="player_1">Player 1</string>
-    <string name="player_2">Player 2</string>
-    <string name="_0">-</string>
+    <string name="player_1">Player O</string>
+    <string name="player_2">Player X</string>
+    <string name="_0"></string>
 </resources>

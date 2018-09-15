@@ -1,12 +1,16 @@
 package com.rahulgaur.tictactoe;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,21 +25,18 @@ public class MainActivity extends AppCompatActivity {
     private TextView player1, player2;
     private static String TAG = "MainActivity.java";
     private String matrix[][] = new String[3][3];
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //for fullscreen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
+                ,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        B1 = findViewById(R.id.b1);
-        B2 = findViewById(R.id.b2);
-        B3 = findViewById(R.id.b3);
-        B4 = findViewById(R.id.b4);
-        B5 = findViewById(R.id.b5);
-        B6 = findViewById(R.id.b6);
-        B7 = findViewById(R.id.b7);
-        B8 = findViewById(R.id.b8);
-        B9 = findViewById(R.id.b9);
+        findViewByIds();
 
         //giving default values to matrix
         for (int i = 0; i <= 2; i++) {
@@ -44,8 +45,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        player1 = findViewById(R.id.player1TV);
-        player2 = findViewById(R.id.player2TV);
+        builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton("Play Again 😊😊", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(MainActivity.this, Welcome.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         Toast.makeText(this, "Player 1 Turn", Toast.LENGTH_LONG).show();
 
@@ -192,6 +200,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void findViewByIds() {
+        B1 = findViewById(R.id.b1);
+        B2 = findViewById(R.id.b2);
+        B3 = findViewById(R.id.b3);
+        B4 = findViewById(R.id.b4);
+        B5 = findViewById(R.id.b5);
+        B6 = findViewById(R.id.b6);
+        B7 = findViewById(R.id.b7);
+        B8 = findViewById(R.id.b8);
+        B9 = findViewById(R.id.b9);
+
+        player1 = findViewById(R.id.player1TV);
+        player2 = findViewById(R.id.player2TV);
+    }
+
     private void makeMatrix(String value, int btn) {
         switch (btn) {
             case R.id.b1:
@@ -247,13 +270,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (gameover >= 4) {
-            if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))) {
+            if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2)) && !arr.get(1).equals("-")) {
                 Log.e(TAG, "winner winner winner " + arr.get(0) + arr.get(1) + arr.get(2));
-                Intent i = new Intent(MainActivity.this, Result.class);
                 turn = turn + 1;
-                i.putExtra("player", turn);
-                startActivity(i);
-                finish();
+                builder.setMessage(arr.get(0)+" is the ultimate winner\n\uD83D\uDC51\uD83D\uDC51\uD83D\uDC51\uD83D\uDC51");
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             } else {
                 Log.e(TAG, "no no no no no " + arr.get(0) + arr.get(1) + arr.get(2));
             }
@@ -276,13 +298,12 @@ public class MainActivity extends AppCompatActivity {
             exit--;
         }
         if (gameover >= 4) {
-            if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))) {
+            if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))&& !arr.get(1).equals("-")) {
                 Log.e(TAG, "winner winner winner " + arr.get(0) + arr.get(1) + arr.get(2));
-                Intent i = new Intent(MainActivity.this, Result.class);
                 turn = turn + 1;
-                i.putExtra("player", turn);
-                startActivity(i);
-                finish();
+                builder.setMessage(arr.get(0)+" is the ultimate winner\n\uD83D\uDC51\uD83D\uDC51\uD83D\uDC51\uD83D\uDC51");
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             } else {
                 Log.e(TAG, "no no no no no " + arr.get(0) + arr.get(1) + arr.get(2));
             }
@@ -301,13 +322,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (gameover >= 4) {
-                if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))) {
+                if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2)) && !arr.get(1).equals("-")) {
                     Log.e(TAG, "winner winner winner " + arr.get(0) + arr.get(1) + arr.get(2));
-                    Intent ip = new Intent(MainActivity.this, Result.class);
                     turn = turn + 1;
-                    ip.putExtra("player", turn);
-                    startActivity(ip);
-                    finish();
+                    builder.setMessage(arr.get(0)+" is the ultimate winner\n\uD83D\uDC51\uD83D\uDC51\uD83D\uDC51\uD83D\uDC51");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 } else {
                     Log.e(TAG, "no no no no no " + arr.get(0) + arr.get(1) + arr.get(2));
                 }
@@ -330,13 +350,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             if (gameover >= 4) {
-                if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))) {
+                if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))&& !arr.get(1).equals("-")) {
                     Log.e(TAG, "winner winner winner " + arr.get(0) + arr.get(1) + arr.get(2));
-                    Intent i = new Intent(MainActivity.this, Result.class);
                     turn = turn + 1;
-                    i.putExtra("player", turn);
-                    startActivity(i);
-                    finish();
+                    builder.setMessage(arr.get(0)+" is the ultimate winner\n\uD83D\uDC51\uD83D\uDC51\uD83D\uDC51\uD83D\uDC51");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 } else {
                     Log.e(TAG, "no no no no no " + arr.get(0) + arr.get(1) + arr.get(2));
                 }
@@ -349,32 +368,33 @@ public class MainActivity extends AppCompatActivity {
         if (pt == 0) {
             btn.setText("O");
             btn.setTextColor(Color.BLACK);
-            String sourceString2 = "<b>Player 2</b>";
+            String sourceString2 = "<b>Player X</b>";
             player2.setText(Html.fromHtml(sourceString2));
-            String sourceString1 = "Player 1";
+            player2.setTextSize(40);
+            String sourceString1 = "Player O";
             player1.setText(Html.fromHtml(sourceString1));
-            Toast.makeText(this, "Player 2 turn", Toast.LENGTH_SHORT).show();
+            player1.setTextSize(35);
             turn++;
             gameover++;
         } else {
             btn.setText("X");
             turn--;
             btn.setTextColor(Color.BLACK);
-            String sourceString1 = "<b>Player 1</b>";
+            String sourceString1 = "<b>Player O</b>";
             player1.setText(Html.fromHtml(sourceString1));
-            String sourceString2 = "Player 2";
+            player1.setTextSize(40);
+            String sourceString2 = "Player X";
             player2.setText(Html.fromHtml(sourceString2));
-            Toast.makeText(this, "Player 1 turn", Toast.LENGTH_SHORT).show();
+            player2.setTextSize(35);
             gameover++;
         }
 
         if (gameover >= 9) {
-            Intent i = new Intent(MainActivity.this, Result.class);
-            i.putExtra("player", "no");
-            startActivity(i);
-            finish();
             Toast.makeText(this, "GAME OVER :D", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "playerTurn: match ended");
+            builder.setMessage("It's a DRAW!! You both are Winners 😄😄");
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
     }
 
