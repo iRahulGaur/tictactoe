@@ -11,13 +11,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button B1, B2, B3, B4, B5, B6, B7, B8, B9;
     private int turn = 0;
-    private int gameover = 1;
+    private int gameover = 0;
     private TextView player1, player2;
     private static String TAG = "MainActivity.java";
+    private String matrix[][] = new String[3][3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
         B8 = findViewById(R.id.b8);
         B9 = findViewById(R.id.b9);
 
+        //giving default values to matrix
+        for (int i = 0; i <= 2; i++) {
+            for (int j = 0; j <= 2; j++) {
+                matrix[i][j] = "-";
+            }
+        }
+
         player1 = findViewById(R.id.player1TV);
         player2 = findViewById(R.id.player2TV);
 
@@ -43,9 +53,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B1.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b1);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b1);
+                    winCondition("X");
+                }
                 playerTurn(turn, B1);
-                Boolean win = winCondition();
-
             }
         });
 
@@ -53,17 +68,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B2.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b2);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b2);
+                    winCondition("X");
+                }
                 playerTurn(turn, B2);
-                Boolean win = winCondition();
-
             }
         });
         B3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 B3.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b3);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b3);
+                    winCondition("X");
+                }
                 playerTurn(turn, B3);
-                Boolean win = winCondition();
 
             }
         });
@@ -72,8 +98,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B4.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b4);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b4);
+                    winCondition("X");
+                }
                 playerTurn(turn, B4);
-                Boolean win = winCondition();
 
             }
         });
@@ -82,8 +114,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B5.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b5);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b5);
+                    winCondition("X");
+                }
                 playerTurn(turn, B5);
-                Boolean win = winCondition();
 
             }
         });
@@ -92,8 +130,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B6.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b6);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b6);
+                    winCondition("X");
+                }
                 playerTurn(turn, B6);
-                Boolean win = winCondition();
 
             }
         });
@@ -102,8 +146,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B7.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b7);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b7);
+                    winCondition("X");
+                }
                 playerTurn(turn, B7);
-                Boolean win = winCondition();
 
             }
         });
@@ -112,8 +162,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B8.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b8);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b8);
+                    winCondition("X");
+                }
                 playerTurn(turn, B8);
-                Boolean win = winCondition();
 
             }
         });
@@ -122,60 +178,171 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 B9.setEnabled(false);
+                if (turn == 0) {
+                    makeMatrix("O", R.id.b9);
+                    winCondition("O");
+                } else {
+                    makeMatrix("X", R.id.b9);
+                    winCondition("X");
+                }
                 playerTurn(turn, B9);
-                Boolean win = winCondition();
 
             }
         });
 
     }
 
-    private boolean winCondition() {
-        int row = 1;
+    private void makeMatrix(String value, int btn) {
+        switch (btn) {
+            case R.id.b1:
+                matrix[0][0] = value;
+                break;
+            case R.id.b2:
+                matrix[0][1] = value;
+                break;
+            case R.id.b3:
+                matrix[0][2] = value;
+                break;
+            case R.id.b4:
+                matrix[1][0] = value;
+                break;
+            case R.id.b5:
+                matrix[1][1] = value;
+                break;
+            case R.id.b6:
+                matrix[1][2] = value;
+                break;
+            case R.id.b7:
+                matrix[2][0] = value;
+                break;
+            case R.id.b8:
+                matrix[2][1] = value;
+                break;
+            case R.id.b9:
+                matrix[2][2] = value;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void winCondition(String turn) {
+        ArrayList<String> arr = new ArrayList<>();
 
         //for diagonal left to right "\" win checks "DONE"
         Log.e(TAG, "diagonal left to right");
-        for (int col = 1; col <= 3; col++) {
+        for (int col = 0; col <= 2; col++) {
             for (int j = col; j <= col; j++) {
                 for (int i = col; i <= col; i++) {
-                    Log.e(TAG, "" + i + j);
-                }
-            }
-        }
-
-        //for diagonal right to left "/" win checks "DONE"
-        int exit = 3;
-        Log.e(TAG, "diagonal right to left");
-        for (int j = 1; j <= 3; j++) {
-            for (int i = 3; i >= 1; i--) {
-                if (i==exit) {
-                    Log.e(TAG, "" + j + i);
-                }
-            }
-            exit--;
-        }
-
-        //for horizontal win checks "DONE"
-        Log.e(TAG, "horizontal");
-        for (int i = 1; i <= 3; i++) {
-            for (int j = 1; j <= 3; j++) {
-                Log.e(TAG, " " + i + j);
-            }
-        }
-
-        //for vertical win checks "DONE"
-        Log.e(TAG, "vertical");
-        for (int col = 1; col <= 3; col++) {
-            for (int j = 1; j <= 3; j++) {
-                for (int i = 1; i <= col; i++) {
-                    if (i >= col) {
-                        Log.e(TAG, "" + j + i);
+                    try {
+                        if (gameover >= 4) {
+                            Log.e(TAG, "" + i + j);
+                            Log.e(TAG, "matrix " + matrix[i][j]);
+                            arr.add(matrix[i][j]);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
         }
+        if (gameover >= 4) {
+            if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))) {
+                Log.e(TAG, "winner winner winner " + arr.get(0) + arr.get(1) + arr.get(2));
+                Intent i = new Intent(MainActivity.this, Result.class);
+                turn = turn + 1;
+                i.putExtra("player", turn);
+                startActivity(i);
+                finish();
+            } else {
+                Log.e(TAG, "no no no no no " + arr.get(0) + arr.get(1) + arr.get(2));
+            }
+        }
+        arr.clear();
 
-        return false;
+        //for diagonal right to left "/" win checks "DONE"
+        int exit = 2;
+        Log.e(TAG, "diagonal right to left");
+        for (int j = 0; j <= 2; j++) {
+            for (int i = 2; i >= 0; i--) {
+                if (i == exit) {
+                    if (gameover >= 4) {
+                        Log.e(TAG, "" + j + i);
+                        Log.e(TAG, "matrix " + matrix[j][i]);
+                        arr.add(matrix[j][i]);
+                    }
+                }
+            }
+            exit--;
+        }
+        if (gameover >= 4) {
+            if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))) {
+                Log.e(TAG, "winner winner winner " + arr.get(0) + arr.get(1) + arr.get(2));
+                Intent i = new Intent(MainActivity.this, Result.class);
+                turn = turn + 1;
+                i.putExtra("player", turn);
+                startActivity(i);
+                finish();
+            } else {
+                Log.e(TAG, "no no no no no " + arr.get(0) + arr.get(1) + arr.get(2));
+            }
+        }
+        arr.clear();
+
+        //for horizontal win checks "DONE"
+        Log.e(TAG, "horizontal");
+        for (int i = 0; i <= 2; i++) {
+            for (int j = 0; j <= 2; j++) {
+                if (gameover >= 4) {
+                    Log.e(TAG, " " + i + j);
+                    Log.e(TAG, "matrix " + matrix[i][j]);
+                    arr.add(matrix[i][j]);
+                }
+            }
+
+            if (gameover >= 4) {
+                if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))) {
+                    Log.e(TAG, "winner winner winner " + arr.get(0) + arr.get(1) + arr.get(2));
+                    Intent ip = new Intent(MainActivity.this, Result.class);
+                    turn = turn + 1;
+                    ip.putExtra("player", turn);
+                    startActivity(ip);
+                    finish();
+                } else {
+                    Log.e(TAG, "no no no no no " + arr.get(0) + arr.get(1) + arr.get(2));
+                }
+            }
+            arr.clear();
+        }
+
+        //for vertical win checks "DONE"
+        Log.e(TAG, "vertical");
+        for (int col = 0; col <= 2; col++) {
+            for (int j = 0; j <= 2; j++) {
+                for (int i = 0; i <= col; i++) {
+                    if (i >= col) {
+                        if (gameover >= 4) {
+                            Log.e(TAG, "" + j + i);
+                            Log.e(TAG, "matrix " + matrix[j][i]);
+                            arr.add(matrix[j][i]);
+                        }
+                    }
+                }
+            }
+            if (gameover >= 4) {
+                if (arr.get(0).equals(arr.get(1)) && arr.get(1).equals(arr.get(2))) {
+                    Log.e(TAG, "winner winner winner " + arr.get(0) + arr.get(1) + arr.get(2));
+                    Intent i = new Intent(MainActivity.this, Result.class);
+                    turn = turn + 1;
+                    i.putExtra("player", turn);
+                    startActivity(i);
+                    finish();
+                } else {
+                    Log.e(TAG, "no no no no no " + arr.get(0) + arr.get(1) + arr.get(2));
+                }
+            }
+            arr.clear();
+        }
     }
 
     private void playerTurn(int pt, Button btn) {
@@ -201,13 +368,14 @@ public class MainActivity extends AppCompatActivity {
             gameover++;
         }
 
-        if (gameover >= 10) {
+        if (gameover >= 9) {
             Intent i = new Intent(MainActivity.this, Result.class);
-            i.putExtra("player", pt);
+            i.putExtra("player", "no");
             startActivity(i);
             finish();
             Toast.makeText(this, "GAME OVER :D", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "playerTurn: match ended");
         }
     }
+
 }
